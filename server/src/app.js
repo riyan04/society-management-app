@@ -1,9 +1,11 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import {userRouter, societyRouter, notificationRouter, eventRouter, complaintRouter} from './routers/index.js'
 
 
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
 
 
 
