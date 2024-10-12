@@ -15,5 +15,9 @@ app.use("/api/v1/notification", notificationRouter)
 app.use("/api/v1/event", eventRouter)
 app.use("/api/v1/complaint", complaintRouter)
 
+app.get("/", (req, res)=>{
+    
+})
+
 
 export default app

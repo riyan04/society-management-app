@@ -2,7 +2,18 @@ import {User} from '../models/user.model.js'
 
 
 const getUser = async(req, res) => {
-    res.send("Hello user Riyan")
+    const user = req.user
+    try {
+        if(!user){
+            throw new Error("Not able to get the user from the req, getUser")
+        }
+        res
+        .status(200)
+        .json(user);
+    } catch (error) {
+        res
+        .render(error.message)
+    }
 }
 
 const userSignin = async(req, res) => {
@@ -37,7 +48,8 @@ const userSignin = async(req, res) => {
         .status(200)
         .json(createdUser)
     } catch (error) {
-        res.render(error)
+        console.log("reached")
+        res.send(error.message)
     }
 }
 
@@ -81,4 +93,24 @@ const userLogin = async(req, res) => {
     
 }
 
-export {getUser, userSignin, userLogin}
+const logoutUser = async(req, res) => {
+    const user = req.user
+
+    if(!user){
+        throw new Error("Not able to get the user from the req, logoutUser")
+    }
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+    res
+    .clearCookie("refreshToken", options)
+    .status(200)
+    .json(
+        {
+            message: `${user.firstName} ${user.lastName} loggedOut`
+        }
+    )
+}
+
+export {getUser, userSignin, userLogin, logoutUser}
